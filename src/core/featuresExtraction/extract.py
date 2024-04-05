@@ -50,13 +50,15 @@ file_name:特征保留文件名，.xlsx格式，无需后缀
 
 def ExtractFeatures(root_path, extractor, file_name):
     image_list = os.listdir(root_path)  # 将改地址下的图片名称序列化，该方法得到的list顺序与文件夹中文件的顺序不一定相同
+    image_list = sorted(image_list)
+    print(image_list)
     result = None  # 创建一个空对象，用处存储之后的特征数据
     columns = None  # 用于处存储特征名
     index = []  # 用于存储标签作为index
     for i in range(0, len(image_list), 2):
         index.append(image_list[i].split('.')[0])
-        image_path = os.path.join(root_path, image_list[i])  # 组合出每张图片的地址
-        label_path = os.path.join(root_path, image_list[i + 1])  # 组合出每张图片对应的label地址
+        image_path = os.path.join(root_path, image_list[i + 1])  # 组合出每张图片的地址
+        label_path = os.path.join(root_path, image_list[i])  # 组合出每张图片对应的label地址
         image = sitk.ReadImage(image_path)  # %读取图片
         label = sitk.ReadImage(label_path)  # %读取图片对应的label
         # features = extractor.execute(image)  # 特征提取
@@ -72,7 +74,7 @@ def ExtractFeatures(root_path, extractor, file_name):
             columns = features_df.columns
         else:
             result = np.append(result, features_df, axis=0)  # 在追加features_df时，result的类型会从dataframe变成ndarray
-    result = pd.DataFrame(data=result.iloc[0:, 0:], columns=columns)  # 将格式变回dataframe，才能写入excel文件
+    result = pd.DataFrame(data=result[0:, 0:], columns=columns)  # 将格式变回dataframe，才能写入excel文件
     result.index = index  # 转换dataframe index 行索引
     xlsx_name = file_name + '.xlsx'
     xlsx_obj = pd.ExcelWriter(xlsx_name)

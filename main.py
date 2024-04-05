@@ -6,6 +6,8 @@ from src.core.featuresReshape.features_select import regression
 from src.core.featuresReshape.reduce_dimension import reduce_dimension
 from src.utils.train_test_features_targets import train_test_features_targets
 from src.core.model.logistic_regression import logistic_rgs
+from src.core.model.svm import svc
+from src.core.model.random_forest import random_forest
 import pandas as pd
 import numpy as np
 from src.core.model.save_and_load.save_and_load import save_model
@@ -26,8 +28,10 @@ def print_hi(name):
     features_targets_4 = train_test_features_targets(features_lda, target, 0.3)
     print(features_lda.shape)
     score, log = logistic_rgs(features_targets_4)
-    save_model(features, target, scaler, lda, log)
-    print(score)
+    score_svc, svc_model = svc(features_targets_4)
+    score_random, rf = random_forest(features_targets_4)
+    save_model(features, target, scaler, lda, svc_model)
+    print(score_random)
 
 
 # Press the green button in the gutter to run the script.
