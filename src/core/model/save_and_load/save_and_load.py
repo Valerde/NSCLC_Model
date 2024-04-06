@@ -1,7 +1,5 @@
 from sklearn.pipeline import Pipeline
 import joblib
-from sklearn2pmml.pipeline import PMMLPipeline
-from sklearn2pmml import sklearn2pmml
 
 
 def save_model(features, target, *to_save):

@@ -85,8 +85,8 @@ def ExtractFeatures(root_path, extractor, file_name):
 
 print(os.getcwd())
 root_path = '/root/IdeaProjects/model/input/images'
-images_list = os.listdir(root_path)
-images_path = os.path.join(root_path, images_list[0])
-images = sitk.ReadImage(images_path)
+# images_list = os.listdir(root_path)
+# images_path = os.path.join(root_path, images_list[0])
+# images = sitk.ReadImage(images_path)
 # plt.imshow(sitk.GetArrayFromImage(images)[12, :, :], cmap="gray")
 ExtractFeatures(root_path=root_path, extractor=extractor, file_name='../../../output/test1')
